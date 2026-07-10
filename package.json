@@ -2,7 +2,7 @@
   "name": "orca-vscode",
   "displayName": "Orca Review",
   "description": "Branch review inside VS Code: walk the merge-base diff of a deliverable branch against trunk, one native diff at a time, with reviewed ✓ marks.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "miguelbacalhau",
   "repository": {
     "type": "git",
@@ -16,6 +16,16 @@
     "SCM Providers"
   ],
   "main": "./dist/extension.js",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "Orca runs git in the workspace to build merge-base diffs; reviewing requires a trusted workspace."
+    },
+    "virtualWorkspaces": {
+      "supported": false,
+      "description": "Orca needs a local git worktree."
+    }
+  },
   "activationEvents": [
     "onUri",
     "onStartupFinished"
