@@ -1,0 +1,85 @@
+{
+  "name": "orca-vscode",
+  "displayName": "Orca Review",
+  "description": "Branch review inside VS Code: walk the merge-base diff of a deliverable branch against trunk, one native diff at a time, with reviewed ✓ marks.",
+  "version": "0.1.0",
+  "publisher": "miguelbacalhau",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/miguelbacalhau/orca.vscode"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "SCM Providers"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onUri",
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "orca.review",
+        "title": "Review",
+        "category": "Orca"
+      },
+      {
+        "command": "orca.reviewNext",
+        "title": "Review: Next File",
+        "category": "Orca",
+        "enablement": "orca.reviewActive"
+      },
+      {
+        "command": "orca.reviewPrev",
+        "title": "Review: Previous File",
+        "category": "Orca",
+        "enablement": "orca.reviewActive"
+      },
+      {
+        "command": "orca.reviewMark",
+        "title": "Review: Toggle Reviewed and Advance",
+        "category": "Orca",
+        "enablement": "orca.reviewActive"
+      },
+      {
+        "command": "orca.reviewClose",
+        "title": "Review: Close",
+        "category": "Orca",
+        "enablement": "orca.reviewActive"
+      }
+    ],
+    "views": {
+      "scm": [
+        {
+          "id": "orcaReview",
+          "name": "Orca Review",
+          "when": "orca.reviewActive"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "compile-tests": "tsc -p tsconfig.test.json",
+    "pretest": "npm run compile-tests && npm run build",
+    "test": "vscode-test",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.7",
+    "@types/node": "^20.14.0",
+    "@types/vscode": "^1.90.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "@vscode/vsce": "^3.1.0",
+    "esbuild": "^0.23.0",
+    "mocha": "^10.7.0",
+    "typescript": "^5.5.0"
+  }
+}
