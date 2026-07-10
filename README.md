@@ -77,6 +77,22 @@ directly if it already has that worktree open; otherwise it records a short-live
 handoff and opens the folder in a new window, which picks the record up on startup. Records
 are consumed or expired (2 minutes), never accumulated.
 
+## Troubleshooting
+
+**"The extension 'miguelbacalhau.orca-vscode' cannot be installed because it was not found."**
+The window that received the review URI is in Workspace Trust **Restricted Mode**. Untrusted
+windows drop this extension from their registry entirely (it runs git in the workspace, which
+is exactly what restricted mode exists to stop), so VS Code mistakes the URI for a request to
+install a Marketplace extension that doesn't exist. Trust the worktree — click "Restricted
+Mode" in the status bar → Trust — then retry. Orca integration worktrees live inside repos
+you've already trusted, and subfolders of trusted folders are auto-trusted, so this mostly
+bites ad-hoc folders in `/tmp`.
+
+**`code --open-url` launches VS Code but no window ever opens.**
+When VS Code is fully quit and has no session to restore, a cold launch via `--open-url`
+alone can come up window-less and the URI dies. Open the worktree first, then fire the URI —
+or skip it entirely: `code <worktree>`, then run "Orca: Review" from the palette.
+
 ## Develop
 
 ```sh
