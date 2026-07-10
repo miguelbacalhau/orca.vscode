@@ -79,7 +79,8 @@
     "compile-tests": "tsc -p tsconfig.test.json",
     "pretest": "npm run compile-tests && npm run build",
     "test": "vscode-test",
-    "package": "vsce package"
+    "package": "vsce package",
+    "publish": "vsce publish --azure-credential"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.7",
