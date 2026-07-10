@@ -68,7 +68,7 @@ point, active only during a session:
 `/orca:review` (or anything else) can open a review in the right window from outside:
 
 ```sh
-code --open-url 'vscode://miguelbacalhau.orca-vscode/review?worktree=/abs/path/to/worktree'
+code --open-url 'vscode://miguelnjacinto.orca-vscode/review?worktree=/abs/path/to/worktree'
 ```
 
 `worktree` is required and must be an absolute path to a git worktree; a `range` query
@@ -79,7 +79,7 @@ are consumed or expired (2 minutes), never accumulated.
 
 ## Troubleshooting
 
-**"The extension 'miguelbacalhau.orca-vscode' cannot be installed because it was not found."**
+**"The extension 'miguelnjacinto.orca-vscode' cannot be installed because it was not found."**
 The window that received the review URI is in Workspace Trust **Restricted Mode**. Untrusted
 windows drop this extension from their registry entirely (it runs git in the workspace, which
 is exactly what restricted mode exists to stop), so VS Code mistakes the URI for a request to

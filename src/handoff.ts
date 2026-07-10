@@ -1,4 +1,4 @@
-// The URI handoff: `code --open-url 'vscode://miguelbacalhau.orca-vscode/review
+// The URI handoff: `code --open-url 'vscode://miguelnjacinto.orca-vscode/review
 // ?worktree=<abs>'` routes to whatever window VS Code picks — generally not a
 // window on that worktree — so the handler never assumes it's home. Match →
 // start directly; no match → a transient pending-review record in globalState
