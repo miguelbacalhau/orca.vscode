@@ -3,6 +3,7 @@
   "displayName": "Orca Review",
   "description": "Branch review inside VS Code: walk the merge-base diff of a deliverable branch against trunk, one native diff at a time, with reviewed ✓ marks.",
   "version": "0.1.1",
+  "private": true,
   "publisher": "miguelbacalhau",
   "repository": {
     "type": "git",
