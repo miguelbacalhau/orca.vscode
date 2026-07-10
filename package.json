@@ -4,7 +4,7 @@
   "description": "Branch review inside VS Code: walk the merge-base diff of a deliverable branch against trunk, one native diff at a time, with reviewed ✓ marks.",
   "version": "0.1.1",
   "private": true,
-  "publisher": "miguelnjacinto",
+  "publisher": "orcavscode",
   "repository": {
     "type": "git",
     "url": "https://github.com/miguelbacalhau/orca.vscode"
@@ -81,7 +81,7 @@
     "pretest": "npm run compile-tests && npm run build",
     "test": "vscode-test",
     "package": "vsce package",
-    "publish": "vsce publish --azure-credential"
+    "publish": "vsce publish --pat \"$(az account get-access-token --query accessToken --resource 499b84ac-1321-427f-aa17-267ca6975798 -o tsv)\""
   },
   "devDependencies": {
     "@types/mocha": "^10.0.7",
