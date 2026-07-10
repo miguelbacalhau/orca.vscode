@@ -16,8 +16,15 @@ the window (or `Orca: Review: Close`), and the tree view only exists while a ses
 
 ## Install
 
-Grab the `.vsix` from the [latest release](https://github.com/miguelbacalhau/orca.vscode/releases)
-and:
+From the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=orcavscode.orca-vscode)
+— search for **Orca Review** in the Extensions view (`⇧⌘X`), or:
+
+```sh
+code --install-extension orcavscode.orca-vscode
+```
+
+Alternatively, grab the `.vsix` from the
+[latest release](https://github.com/miguelbacalhau/orca.vscode/releases) and:
 
 ```sh
 code --install-extension orca-vscode-<version>.vsix
@@ -101,9 +108,3 @@ npm run build      # bundle to dist/extension.js
 npm test           # @vscode/test-electron: git layer + session smoke
 npm run package    # vsce package → orca-vscode-<version>.vsix
 ```
-
-## Non-goals (v1)
-
-Review notes (v2, shared format with orca.nvim), multi-diff view, branch discovery/picker UI,
-worktree management, and forks of VS Code (`code-insiders`, Cursor, VSCodium) — one binary,
-one extension id, on purpose.
