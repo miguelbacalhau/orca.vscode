@@ -94,6 +94,10 @@ async function handleUri(context: vscode.ExtensionContext, uri: vscode.Uri): Pro
   });
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 // Startup half of the handoff: consume a pending record aimed at this
 // window's workspace. Expired or non-matching records are deleted silently —
 // stale handoffs must never fire on an innocent later open.
@@ -107,7 +111,21 @@ export async function checkPending(context: vscode.ExtensionContext): Promise<vo
     return;
   }
   const folder = await matchingFolder(pending.worktree);
-  if (folder) {
-    await session.review(pending.range, folder.uri.fsPath);
+  if (!folder) {
+    return;
+  }
+  // onStartupFinished fires before the workbench settles: the welcome tab
+  // and editor restore land afterwards and can bury (or replace) a preview
+  // diff opened too early. Let the window settle, open, then verify the
+  // pair survived — reopening once if startup swallowed it.
+  await sleep(1000);
+  await session.review(pending.range, folder.uri.fsPath);
+  for (let i = 0; i < 3; i++) {
+    await sleep(1000);
+    const s = session.current();
+    if (!s || s.index < 0 || s.entries[s.index].binary || session.hasOwnedTab()) {
+      return;
+    }
+    await session.open(s.index);
   }
 }

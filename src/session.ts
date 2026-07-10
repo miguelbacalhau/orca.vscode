@@ -57,8 +57,8 @@ function refreshUi(): void {
 // both the teardown and the enablePreview:false fallback: with preview tabs
 // the next pair replaces the last anyway; with pinned tabs this stops them
 // accumulating.
-async function closeOwnedTabs(): Promise<void> {
-  const owned = vscode.window.tabGroups.all
+function ownedTabs(): vscode.Tab[] {
+  return vscode.window.tabGroups.all
     .flatMap((g) => g.tabs)
     .filter((t) => {
       const input = t.input;
@@ -67,6 +67,16 @@ async function closeOwnedTabs(): Promise<void> {
         (input.original.scheme === SCHEME || input.modified.scheme === SCHEME)
       );
     });
+}
+
+// Whether the session's diff pair is currently open somewhere. Binary
+// entries open the plain file, so they never count as an owned tab.
+export function hasOwnedTab(): boolean {
+  return ownedTabs().length > 0;
+}
+
+async function closeOwnedTabs(): Promise<void> {
+  const owned = ownedTabs();
   if (owned.length > 0) {
     await vscode.window.tabGroups.close(owned);
   }
@@ -163,9 +173,13 @@ export async function open(idx: number): Promise<void> {
   }
 
   refreshUi();
-  await vscode.commands.executeCommand('vscode.diff', left, right, `Orca: ${title}`, {
-    preview: true,
-  });
+  try {
+    await vscode.commands.executeCommand('vscode.diff', left, right, `Orca: ${title}`, {
+      preview: true,
+    });
+  } catch (err) {
+    error(`cannot open diff for ${e.path}: ${err instanceof Error ? err.message : String(err)}`);
+  }
 }
 
 // Move to the next/previous file's pair. At the edge, a polite message; no
